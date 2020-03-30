@@ -15,6 +15,10 @@ dependencies {
     implementation 'org.openjfx:javafx:11.0.2'
     implementation 'org.openjfx:javafx-base:11.0.2'
     implementation 'org.openjfx:javafx-controls:11.0.2'
+    implementation 'org.controlsfx:controlsfx:11.0.1'
+    implementation 'no.tornado:tornadofx-controlsfx:0.1'
+
+
 }
 
 compileKotlin {
