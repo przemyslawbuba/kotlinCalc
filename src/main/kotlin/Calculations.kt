@@ -58,6 +58,7 @@ class Calculations: Controller() {
 
         //Docelowe obliczenia
         var index : Int
+        var numeric = true
         var tmpString : String
         var firstNumber : String
         var firstIndex  : Int
@@ -92,30 +93,89 @@ class Calculations: Controller() {
                     secondIndex++
             }
             tmpResult = (firstNumber.toInt() * secondNumber.toInt()).toString()
-
-//            if (firstIndex != 0){
-//                operation = operation.substring(0,firstIndex+1) + tmpResult + operation.substring(secondIndex)
-//            }else if (secondIndex == operation.length-1)
-//                operation = tmpResult + operation.substring(secondIndex, operation.length-1)
-//            else
-//                operation = tmpResult + operation.substring(secondIndex, operation.length)
-//            }
             operation = operation.replace(firstNumber + "*" + secondNumber, tmpResult)
 
         }
-//5+2*10+2*10
+
 
         //Dzielenie
-        while(inputValue.contains("/")){
-            break
+        while(operation.contains("/")){
+            index = operation.indexOf('/')
+            firstIndex = index - 1
+            secondIndex = index + 1
+            firstNumber = ""
+            secondNumber = ""
+            while ((operation[firstIndex] != '+') and (operation[firstIndex] != '-') and (operation[firstIndex] != '/') and (operation[firstIndex] != '*')) {
+                firstNumber = operation[firstIndex] + firstNumber
+                if (firstIndex == 0) {
+                    break
+                } else
+                    firstIndex--
+            }
+            while ((operation[secondIndex] != '+') and (operation[secondIndex] != '-') and (operation[secondIndex] != '/') and (operation[secondIndex] != '*')) {
+                secondNumber += operation[secondIndex]
+                if (secondIndex == operation.length - 1) {
+                    break
+                } else
+                    secondIndex++
+            }
+            tmpResult = (firstNumber.toFloat() / secondNumber.toFloat()).toString()
+            operation = operation.replace(firstNumber + "/" + secondNumber, tmpResult)
         }
+
+
         //Dodawanie
-        while(inputValue.contains("+")){
-            break
+        while(operation.contains("+")){
+                index = operation.indexOf('+')
+                firstIndex = index - 1
+                secondIndex = index + 1
+                firstNumber = ""
+                secondNumber = ""
+                while ((operation[firstIndex] != '+') and (operation[firstIndex] != '-') and (operation[firstIndex] != '/') and (operation[firstIndex] != '*')) {
+                    firstNumber = operation[firstIndex] + firstNumber
+                    if (firstIndex == 0) {
+                        break
+                    } else
+                        firstIndex--
+                }
+                while ((operation[secondIndex] != '+') and (operation[secondIndex] != '-') and (operation[secondIndex] != '/') and (operation[secondIndex] != '*')) {
+                    secondNumber += operation[secondIndex]
+                    if (secondIndex == operation.length - 1) {
+                        break
+                    } else
+                        secondIndex++
+                }
+                tmpResult = (firstNumber.toFloat() + secondNumber.toFloat()).toString()
+                operation = operation.replace(firstNumber + "+" + secondNumber, tmpResult)
         }
         //Odejmowanie
-        while(inputValue.contains("-")){
-            break
+        while(operation.contains("-")){
+            //dodane ze względu na możliwośc pojawienia sie liczb ujemnych
+            numeric = operation.matches("-?\\d+(\\.\\d+)?".toRegex())
+            if (numeric){
+                break
+            }
+            index = operation.indexOf('-')
+            firstIndex = index - 1
+            secondIndex = index + 1
+            firstNumber = ""
+            secondNumber = ""
+            while ((operation[firstIndex] != '+') and (operation[firstIndex] != '-') and (operation[firstIndex] != '/') and (operation[firstIndex] != '*')) {
+                firstNumber = operation[firstIndex] + firstNumber
+                if (firstIndex == 0) {
+                    break
+                } else
+                    firstIndex--
+            }
+            while ((operation[secondIndex] != '+') and (operation[secondIndex] != '-') and (operation[secondIndex] != '/') and (operation[secondIndex] != '*')) {
+                secondNumber += operation[secondIndex]
+                if (secondIndex == operation.length - 1) {
+                    break
+                } else
+                    secondIndex++
+            }
+            tmpResult = (firstNumber.toFloat() - secondNumber.toFloat()).toString()
+            operation = operation.replace(firstNumber + "-" + secondNumber, tmpResult)
         }
 
         result = operation
